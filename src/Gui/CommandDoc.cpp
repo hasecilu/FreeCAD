@@ -831,6 +831,7 @@ StdCmdProjectInfo::StdCmdProjectInfo()
   sWhatsThis    = "Std_ProjectInfo";
   sStatusTip    = QT_TR_NOOP("Show details of the currently active document");
   sPixmap       = "document-properties";
+  sAccel        = "Alt+Return";
 }
 
 void StdCmdProjectInfo::activated(int iMsg)

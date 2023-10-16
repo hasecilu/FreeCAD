@@ -643,6 +643,7 @@ CmdSpreadsheetStyleBold::CmdSpreadsheetStyleBold()
     sWhatsThis = "Spreadsheet_StyleBold";
     sStatusTip = sToolTipText;
     sPixmap = "SpreadsheetStyleBold";
+    sAccel = "Ctrl+Shift+B";
 }
 
 void CmdSpreadsheetStyleBold::activated(int iMsg)
@@ -726,6 +727,7 @@ CmdSpreadsheetStyleItalic::CmdSpreadsheetStyleItalic()
     sWhatsThis = "Spreadsheet_StyleItalic";
     sStatusTip = sToolTipText;
     sPixmap = "SpreadsheetStyleItalic";
+    sAccel = "Ctrl+Shift+I";
 }
 
 void CmdSpreadsheetStyleItalic::activated(int iMsg)
@@ -809,6 +811,7 @@ CmdSpreadsheetStyleUnderline::CmdSpreadsheetStyleUnderline()
     sWhatsThis = "Spreadsheet_StyleUnderline";
     sStatusTip = sToolTipText;
     sPixmap = "SpreadsheetStyleUnderline";
+    sAccel = "Ctrl+Shift+U";
 }
 
 void CmdSpreadsheetStyleUnderline::activated(int iMsg)
