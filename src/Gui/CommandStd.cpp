@@ -358,6 +358,7 @@ StdCmdDlgPreferences::StdCmdDlgPreferences()
     sWhatsThis    = "Std_DlgPreferences";
     sStatusTip    = QT_TR_NOOP("Opens a Dialog to edit the preferences");
     sPixmap     = "preferences-system";
+    sAccel        = "Ctrl+,";
     eType         = 0;
 }
 
