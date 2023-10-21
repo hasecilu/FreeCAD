@@ -112,7 +112,8 @@ class AddonUninstallerGUI(QtCore.QObject):
         QtWidgets.QMessageBox.information(
             utils.get_main_am_window(),
             translate("AddonsInstaller", "Uninstall complete"),
-            translate("AddonInstaller", "Finished removing {}").format(addon.display_name),
+            translate("AddonInstaller", "Finished removing {}").format(
+                self.addon_to_remove.display_name),
         )
         self._finalize()
 
