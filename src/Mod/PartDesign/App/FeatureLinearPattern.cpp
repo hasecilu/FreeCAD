@@ -57,12 +57,18 @@ LinearPattern::LinearPattern()
 {
     auto initialMode = LinearPatternMode::length;
 
-    ADD_PROPERTY_TYPE(Direction,(nullptr),"LinearPattern",(App::PropertyType)(App::Prop_None),"Direction");
-    ADD_PROPERTY(Reversed,(0));
+    ADD_PROPERTY_TYPE(Direction,
+                      (nullptr),
+                      "LinearPattern",
+                      (App::PropertyType)(App::Prop_None),
+                      "Direction");
+    ADD_PROPERTY(Reversed, (0));
+    ADD_PROPERTY(Reversed2, (0));
     ADD_PROPERTY(Mode, (long(initialMode)));
-    ADD_PROPERTY(Length,(100.0));
-    ADD_PROPERTY(Offset,(10.0));
-    ADD_PROPERTY(Occurrences,(3));
+    ADD_PROPERTY(Length, (100.0));
+    ADD_PROPERTY(Offset, (10.0));
+    ADD_PROPERTY(Offset2, (0.0));
+    ADD_PROPERTY(Occurrences, (3));
     Occurrences.setConstraints(&intOccurrences);
     Mode.setEnums(ModeEnums);
     setReadWriteStatusForMode(initialMode);
@@ -70,14 +76,13 @@ LinearPattern::LinearPattern()
 
 short LinearPattern::mustExecute() const
 {
-    if (Direction.isTouched() ||
-        Reversed.isTouched() ||
-        Mode.isTouched() ||
+    if (Direction.isTouched() || Reversed.isTouched() || Reversed2.isTouched() || Mode.isTouched()
+        ||
         // Length and Offset are mutually exclusive, only one could be updated at once
-        Length.isTouched() || 
-        Offset.isTouched() || 
-        Occurrences.isTouched())
+        Length.isTouched() || Offset.isTouched() || Offset2.isTouched()
+        || Occurrences.isTouched()) {
         return 1;
+    }
     return Transformed::mustExecute();
 }
 
@@ -100,6 +105,7 @@ const std::list<gp_Trsf> LinearPattern::getTransformations(const std::vector<App
     if (distance < Precision::Confusion())
         throw Base::ValueError("Pattern length too small");
     bool reversed = Reversed.getValue();
+    bool reversed2 = Reversed2.getValue();
 
     App::DocumentObject* refObject = Direction.getValue();
     if (!refObject)
@@ -214,8 +220,15 @@ const std::list<gp_Trsf> LinearPattern::getTransformations(const std::vector<App
             throw Base::ValueError("Invalid mode");
     }
 
-    if (reversed)
+    gp_Vec offset2(dir.Y(), dir.X(), dir.Z());
+    offset2 *= Offset2.getValue();
+
+    if (reversed) {
         offset.Reverse();
+    }
+    if (reversed2) {
+        offset2.Reverse();
+    }
 
     std::list<gp_Trsf> transformations;
     gp_Trsf trans;
@@ -224,7 +237,7 @@ const std::list<gp_Trsf> LinearPattern::getTransformations(const std::vector<App
     // NOTE: The original feature is already included in the list of transformations!
     // Therefore we start with occurrence number 1
     for (int i = 1; i < occurrences; i++) {
-        trans.SetTranslation(offset * i);
+        trans.SetTranslation(offset * i + offset2 * i);
         transformations.push_back(trans);
     }
 

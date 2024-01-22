@@ -41,11 +41,13 @@ class PartDesignExport LinearPattern : public PartDesign::Transformed
 public:
     LinearPattern();
 
-    App::PropertyLinkSub     Direction;
-    App::PropertyBool        Reversed;
+    App::PropertyLinkSub Direction;
+    App::PropertyBool Reversed;
+    App::PropertyBool Reversed2;
     App::PropertyEnumeration Mode;
-    App::PropertyLength      Length;
-    App::PropertyLength      Offset;
+    App::PropertyLength Length;
+    App::PropertyLength Offset;
+    App::PropertyLength Offset2;
     App::PropertyIntegerConstraint Occurrences;
 
    /** @name methods override feature */
