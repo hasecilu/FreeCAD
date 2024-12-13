@@ -305,7 +305,7 @@ void DisplayedFilesModel::addFile(const QString& filePath)
              << QLatin1String("--verbose=quiet") << QLatin1String("--output=") + thumbnailPath
              << QLatin1String("--resolution=") + QString::number(128) + QLatin1String(",")
                 + QString::number(128)
-             << filePath;
+             << filePath;  // TODO: get size from preferences
 
         // Run the f3d command to generate the thumbnail
         QProcess process;
@@ -322,6 +322,7 @@ void DisplayedFilesModel::addFile(const QString& filePath)
                 _imageCache.insert(filePath, thumbnailData);
             }
         }
+        else if (result == 127) {}
     }
 }
 
